@@ -190,7 +190,7 @@ static const NSCalendarUnit PMEPickerViewComponents = NSCalendarUnitDay | NSCale
 
 - (NSArray *)shortMonthNames {
     if (!_shortMonthNames) {
-        _shortMonthNames = [self.dateFormatter shortMonthSymbols];
+        _shortMonthNames = [self.dateFormatter monthSymbols];
     }
     return _shortMonthNames;
 }
@@ -279,29 +279,38 @@ static const NSCalendarUnit PMEPickerViewComponents = NSCalendarUnitDay | NSCale
     UILabel* label = (UILabel*)view;
     if (!label) {
         label = [UILabel new];
-        label.font = [UIFont systemFontOfSize:20.];
+		UIFont* font = [UIFont fontWithName:@"HelveticaNeue" size: 22];
+		if (font != nil) {
+			label.font = font;
+		} else {
+			label.font = [UIFont systemFontOfSize:20.];
+		}
         label.textAlignment = NSTextAlignmentCenter;
     }
     label.text = [self pickerView:pickerView titleForRow:row forComponent:component];
-    
+	label.textColor = [UIColor whiteColor];
     return label;
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
     if (component == self.dayComponent) {
-        return 30.;
+        return 60.;
     } else if (component == self.monthComponent) {
-        return 65.;
+        return 165.;
     } else if (component == self.yearComponent) {
         return 60.;
     } else if (component == self.hourComponent) {
-        return 30.;
+        return 80.;
     } else if (component == self.minuteComponent) {
-        return 30.;
+        return 80.;
     } else if (component == self.ampmComponent) {
-        return 50.;
+        return 80.;
     }
     return 0.;
+}
+
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
+	return 30.0;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
